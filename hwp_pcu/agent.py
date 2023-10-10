@@ -147,7 +147,7 @@ class HWPPCUAgent:
         Notes:
             Please run get_status() only when the PCU status is lost.
             get_status() can be failed when operated just after send_command(cmd).
-            get_status() cannot know whether the PCU power supply is working.
+            get_status() cannot tell whether the PCU power supply is working.
         """
         self.status = self.PCU.get_status()
         msg = 'Current status is ' + self.status
