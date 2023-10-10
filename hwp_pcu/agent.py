@@ -132,11 +132,24 @@ class HWPPCUAgent:
             return True, msg
 
         else:
-            print("Choose the command from 'off', 'on_1', 'on_2' and 'hold'.")
+            msg = "Choose the command from 'off', 'on_1', 'on_2' and 'hold'."
+            return False, msg
 
-    def get_status(self, session, params):
+    def _get_status(self, session, params):
+        """_get_status()
+
+        **Task** - Get the operation mode of the phase compensation unit.
+        off: The compensation phase is zero.
+        on_1:The compensation phase is +120 deg.
+        on_2: The compensation phase is -120 deg.
+        hold: Stop the HWP spin.
+        
+        Notes:
+            This command needs to be debugged since it works only once.
+        """
         self.status = self.PCU.get_status()
-        return True
+        msg = 'Current status is ' + self.status
+        return True, msg
 
     def acq(self, session, params):
         """acq()
@@ -145,7 +158,7 @@ class HWPPCUAgent:
 
         Notes:
             The most recent data collected is stored in the session data in the
-            structure::
+            structure:
 
                 >>> response.session['data']
                 {'status': 'on_1',
@@ -230,7 +243,7 @@ def main(args=None):
         init_params = {'auto_acquire': True}
 
     agent, runner = ocs_agent.init_site_agent(args)
-    hwppcu_agent = HWPPCUAgent(agent,
+    hwppcu_agent = HWPPCUAgent(agent, 
                                port=args.port)
     agent.register_task('init_connection', hwppcu_agent.init_connection,
                         startup=init_params)
