@@ -135,7 +135,7 @@ class HWPPCUAgent:
             msg = "Choose the command from 'off', 'on_1', 'on_2' and 'hold'."
             return False, msg
 
-    def _get_status(self, session, params):
+    def get_status(self, session, params):
         """_get_status()
 
         **Task** - Get the operation mode of the phase compensation unit.
@@ -145,7 +145,9 @@ class HWPPCUAgent:
         hold: Stop the HWP spin.
         
         Notes:
-            This command needs to be debugged since it works only once.
+            Please run get_status() only when the PCU status is lost.
+            get_status() can be failed when operated just after send_command(cmd).
+            get_status() cannot know whether the PCU power supply is working.
         """
         self.status = self.PCU.get_status()
         msg = 'Current status is ' + self.status
