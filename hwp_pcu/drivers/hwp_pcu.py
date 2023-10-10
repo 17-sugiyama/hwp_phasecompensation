@@ -34,7 +34,7 @@ class PCU:
         cmd = "relay read " + str(channel) + "\n\r"
         self.port.write(cmd.encode('utf-8'))
         time.sleep(.1)
-        response = self.port.read(21)
+        response = self.port.read(25)
         time.sleep(.1)
         response = response.decode('utf-8')
         if response.find("on") > 0:
