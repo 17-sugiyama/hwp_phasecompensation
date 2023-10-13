@@ -61,7 +61,9 @@ class PCU:
 
         for i in channel:
             channel_switch.append(self.relay_read(i))
-        if channel_switch == [False, False, False, False, False, False]:
+        if -1 in channel_switch:
+            return 'acquisition failed'
+        elif channel_switch == [False, False, False, False, False, False]:
             return 'off'
         elif channel_switch == [True, True, True, False, False, False]:
             return 'on_1'
