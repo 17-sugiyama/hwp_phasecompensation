@@ -149,9 +149,14 @@ class HWPPCUAgent:
             get_status() can be failed when operated just after send_command(cmd).
             get_status() cannot tell whether the PCU power supply is working.
         """
-        self.status = self.PCU.get_status()
-        msg = 'Current status is ' + self.status
-        return True, msg
+        status = self.PCU.get_status()
+        if status == 'acquisition failed':
+            msg = 'Acquisition failed. Please try again later.'
+            return False, msg
+        else:
+            self.status = status
+            msg = 'Current status is ' + self.status
+            return True, msg
 
     def acq(self, session, params):
         """acq()
